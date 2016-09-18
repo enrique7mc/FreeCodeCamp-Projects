@@ -1,0 +1,80 @@
+/* Mobile */
+@media all and (min-width: 320px) {
+  .main {
+    max-width: 600px;
+    margin: auto;
+  }
+
+  .wrapper {
+    background-color: #ffffff;
+    margin: 20% 5%;
+    border-radius: 3px;
+    padding: 1% 5%;
+  }
+
+  body {
+    background-color: #3385ff;
+    color: #3385ff;
+    transition: background-color 0.8s ease-in;
+  }
+
+  .quote-frame {
+    opacity: 0;
+    transition: opacity 0.7s ease-in;
+  }
+
+  .quote {
+    font-family: 'Raleway', sans-serif;
+    font-size: 1.8em;
+    font-weight: 300;
+  }
+
+  .load {
+    opacity: 1;
+  }
+
+  .author {
+    font-family: 'Raleway', sans-serif;
+    font-size: 1.3em;
+    font-weight: 300;
+    margin-top: 0;
+    text-align: right;
+  }
+
+  .buttons {
+    margin-bottom: 5%;
+    height: 50px;
+  }
+
+  .buttons .left {
+    float: left;
+  }
+
+  .buttons .right {
+    float: right;
+    margin-top: 4px;
+  }
+
+  .twitter-icon {
+    color: #3385ff;
+  }
+
+  .new-button {
+    border: none;
+    border-radius: 3px;
+    background: none;
+    background-color: #3385ff;
+    color: #ffffff;
+    height: 40px;
+    padding: 0 20px;
+  }
+}
+
+@media (max-width: 800px) and (orientation: landscape) {
+  .wrapper {
+    background-color: #ffffff;
+    margin: 5% 5%;
+    border-radius: 3px;
+    padding: 1% 5%;
+  }
+ }
