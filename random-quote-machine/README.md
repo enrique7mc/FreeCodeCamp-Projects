@@ -1,6 +1,6 @@
 # Random Quote Machine
 
-Show a famous quote at random order using data from
+Show famous quotes at random order using data from
 [Quotes API](https://andruxnet-random-famous-quotes.p.mashape.com/).
 
 ## Features
