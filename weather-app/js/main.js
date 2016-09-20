@@ -2,6 +2,7 @@
   'use strict';
 
   var TEMPERATURE_SELECTOR = '.temperature';
+  var DEGREE_SELECTOR = '.degree';
   var LOCATION_SELECTOR = '.location';
   var CONDITIONS_SELECTOR = '.conditions';
   var WIND_SELECTOR = '.wind';
@@ -11,6 +12,7 @@
   var ERROR_SELECTOR = '.error';
 
   var temperatureElement = document.querySelector(TEMPERATURE_SELECTOR);
+  var degreeElement = document.querySelector(DEGREE_SELECTOR);
   var locationElement = document.querySelector(LOCATION_SELECTOR);
   var conditionsElement = document.querySelector(CONDITIONS_SELECTOR);
   var windElement = document.querySelector(WIND_SELECTOR);
@@ -21,8 +23,10 @@
 
   var WEATHER_KEY = 'weatherResponse';
   var TIMESTAMP_KEY = 'timestamp';
-  var API_ENDPOINT = 'http://api.openweathermap.org/data/2.5/weather';
-  var API_KEY = 'c2389f8342748200b6a1cb23ed83fe1f';
+  var CACHE_MAX_AGE = 1000 * 60 * 10; // 10 minutes
+  var LOCATION_API_ENDPOINT = 'http://ipinfo.io';
+  var WEATHER_API_ENDPOINT = 'http://api.openweathermap.org/data/2.5/weather';
+  var WEATHER_API_KEY = 'c2389f8342748200b6a1cb23ed83fe1f';
 
   var UNITS = {
     METRICS: 'metric',
@@ -43,14 +47,15 @@
     loadingElement.classList.add('hide');
   }
 
-  function showWeather(weatherResponse) {
+  function showWeather(weatherResponse, fromCache) {
     var temperature = weatherResponse.main.temp;
     var conditions = weatherResponse.weather[0].description;
     var windSpeed = weatherResponse.wind.speed;
     var city = weatherResponse.city;
     var icon = weatherResponse.weather[0].icon;
 
-    temperatureElement.textContent = temperature + ' ' + getUnit();
+    temperatureElement.textContent = temperature;
+    degreeElement.textContent = getUnit();
     locationElement.textContent = city;
     conditionsElement.textContent = conditions;
     windElement.textContent = 'Wind: ' + windSpeed + ' m/s';
@@ -59,7 +64,7 @@
     sectionElement.classList.remove('hide');
     loadingElement.classList.add('hide');
 
-    if (storageAvailable('localStorage')) {
+    if (storageAvailable('localStorage') && !fromCache) {
     	localStorage.setItem(WEATHER_KEY, JSON.stringify(weatherResponse));
       localStorage.setItem(TIMESTAMP_KEY, Date.now());
     }
@@ -68,32 +73,30 @@
   function getWeather(latitude, longitude, city) {
     if (storageAvailable('localStorage')) {
     	var timestamp = localStorage.getItem(TIMESTAMP_KEY);
-      if (Math.floor((new Date() - timestamp) / 60000) < 10 ) {
-        showWeather(JSON.parse(localStorage.getItem(WEATHER_KEY)));
-        console.log('from localstorage');
+      if (Math.floor((new Date() - timestamp)) < CACHE_MAX_AGE ) {
+        showWeather(JSON.parse(localStorage.getItem(WEATHER_KEY)), true);
         return;
       }
     }
-    var URL = API_ENDPOINT
+    var URL = WEATHER_API_ENDPOINT
       + '?lat=' + latitude
       + '&lon=' + longitude
-      + '&APPID=' + API_KEY
+      + '&APPID=' + WEATHER_API_KEY
       + '&units=' + currentUnit;
     $.ajax({
       type: 'POST',
       url: URL,
       contentType: "application/x-www-form-urlencoded"
     }).done(function(response) {
-      console.log(response);
       response.city = city;
-      showWeather(response);
+      showWeather(response, false);
     }).fail(function(response) {
       showErrorMessage()
     });
   }
 
   function getLocation(callback) {
-    $.getJSON('http://ipinfo.io')
+    $.getJSON(LOCATION_API_ENDPOINT)
       .done(function (data) {
         var latlng = data.loc.split(',');
         var latitude = parseFloat(latlng[0]);

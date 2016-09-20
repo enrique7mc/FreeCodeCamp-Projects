@@ -20,10 +20,16 @@ h1, h2 {
   vertical-align: middle;
 }
 
-.temperature {
+.temperature, .degree {
   display: inline-block;
   vertical-align: middle;
   color: #fff;
+  margin-right: 4px;
+}
+
+.degree {
+  border-bottom: 1.5px solid yellow;
+  cursor: pointer;
 }
 
 .forecast div {
