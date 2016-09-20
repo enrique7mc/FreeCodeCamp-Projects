@@ -8,6 +8,7 @@
   var IMG_SELECTOR = '.weather-icon';
   var SECTION_SELECTOR = '.weather';
   var LOADING_SELECTOR = '.load-icon';
+  var ERROR_SELECTOR = '.error';
 
   var temperatureElement = document.querySelector(TEMPERATURE_SELECTOR);
   var locationElement = document.querySelector(LOCATION_SELECTOR);
@@ -16,7 +17,10 @@
   var imageElement = document.querySelector(IMG_SELECTOR);
   var sectionElement = document.querySelector(SECTION_SELECTOR);
   var loadingElement = document.querySelector(LOADING_SELECTOR);
+  var errorElement = document.querySelector(ERROR_SELECTOR);
 
+  var WEATHER_KEY = 'weatherResponse';
+  var TIMESTAMP_KEY = 'timestamp';
   var API_ENDPOINT = 'http://api.openweathermap.org/data/2.5/weather';
   var API_KEY = 'c2389f8342748200b6a1cb23ed83fe1f';
 
@@ -34,6 +38,11 @@
     return currentUnit === UNITS.METRICS ? '°C' : '°K';
   }
 
+  function showErrorMessage() {
+    errorElement.classList.remove('hide');
+    loadingElement.classList.add('hide');
+  }
+
   function showWeather(weatherResponse) {
     var temperature = weatherResponse.main.temp;
     var conditions = weatherResponse.weather[0].description;
@@ -49,9 +58,22 @@
 
     sectionElement.classList.remove('hide');
     loadingElement.classList.add('hide');
+
+    if (storageAvailable('localStorage')) {
+    	localStorage.setItem(WEATHER_KEY, JSON.stringify(weatherResponse));
+      localStorage.setItem(TIMESTAMP_KEY, Date.now());
+    }
   }
 
   function getWeather(latitude, longitude, city) {
+    if (storageAvailable('localStorage')) {
+    	var timestamp = localStorage.getItem(TIMESTAMP_KEY);
+      if (Math.floor((new Date() - timestamp) / 60000) < 10 ) {
+        showWeather(JSON.parse(localStorage.getItem(WEATHER_KEY)));
+        console.log('from localstorage');
+        return;
+      }
+    }
     var URL = API_ENDPOINT
       + '?lat=' + latitude
       + '&lon=' + longitude
@@ -66,26 +88,8 @@
       response.city = city;
       showWeather(response);
     }).fail(function(response) {
-      console.log('weather fetch failed');
+      showErrorMessage()
     });
-    // var response = {
-    //   "coord":{"lon":-99.1,"lat":19.43},
-    //   "weather":[{"id":500,"main":"Rain","description":"light rain","icon":"10d"}],
-    //   "base":"stations",
-    //   "main":{"temp":293.443,"pressure":762.48,"humidity":59,"temp_min":293.443,"temp_max":293.443,"sea_level":1021.5,"grnd_level":762.48},
-    //   "wind":{"speed":0.76,"deg":26.0017},
-    //   "rain":{"3h":0.255},
-    //   "clouds":{"all":32},
-    //   "dt":1474321837,
-    //   "sys":{"message":0.1699,"country":"MX","sunrise":1474287899,"sunset":1474331638},
-    //   "id":3827407,
-    //   "name":"Venustiano Carranza",
-    //   "cod":200
-    // };
-    // response.city = city;
-    // setTimeout(function () {
-    //   showWeather(response);
-    // }, 2000);
   }
 
   function getLocation(callback) {
@@ -98,8 +102,21 @@
         callback(latitude, longitude, city);
       })
       .fail(function () {
-        console.log('location fetch failed');
+        showErrorMessage();
       });
+  }
+
+  function storageAvailable(type) {
+  	try {
+  		var storage = window[type],
+  			x = '__storage_test__';
+  		storage.setItem(x, x);
+  		storage.removeItem(x);
+  		return true;
+  	}
+  	catch(e) {
+  		return false;
+  	}
   }
 
   getLocation(getWeather);

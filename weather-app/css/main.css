@@ -44,3 +44,9 @@ h1, h2 {
   max-width: 75px;
   max-height: 75px;
 }
+
+.error {
+  margin-top: 50px;
+  color: #fff;
+  font-family: 'Source Sans Pro', sans-serif;
+}
