@@ -1,6 +1,9 @@
 (function () {
   'use strict';
 
+  /*
+    SELECTORS AND VARIABLES
+  */
   var TEMPERATURE_SELECTOR = '.temperature';
   var DEGREE_SELECTOR = '.degree';
   var LOCATION_SELECTOR = '.location';
@@ -35,6 +38,9 @@
   var currentUnit = UNITS.METRICS;
   var currentTemperature = null;
 
+  /*
+    UTILITY FUNCTION
+  */
   function toggleUnits() {
     currentUnit = currentUnit === UNITS.METRICS ? UNITS.IMPERIAL : UNITS.METRICS;
     degreeElement.textContent = getUnit();
@@ -52,6 +58,22 @@
     return temperature;
   }
 
+  function storageAvailable(type) {
+  	try {
+  		var storage = window[type],
+  			x = '__storage_test__';
+  		storage.setItem(x, x);
+  		storage.removeItem(x);
+  		return true;
+  	}
+  	catch(e) {
+  		return false;
+  	}
+  }
+
+  /*
+    UI FUNCTIONS
+  */
   function showErrorMessage() {
     errorElement.classList.remove('hide');
     loadingElement.classList.add('hide');
@@ -81,6 +103,9 @@
     }
   }
 
+  /*
+    API CALL FUNCTIONS
+  */
   function getWeather(latitude, longitude, city) {
     if (storageAvailable('localStorage')) {
     	var timestamp = localStorage.getItem(TIMESTAMP_KEY);
@@ -120,19 +145,9 @@
       });
   }
 
-  function storageAvailable(type) {
-  	try {
-  		var storage = window[type],
-  			x = '__storage_test__';
-  		storage.setItem(x, x);
-  		storage.removeItem(x);
-  		return true;
-  	}
-  	catch(e) {
-  		return false;
-  	}
-  }
-
+  /*
+    INITIALIZATION
+  */
   getLocation(getWeather);
   degreeElement.addEventListener('click', function (e) {
     toggleUnits();
