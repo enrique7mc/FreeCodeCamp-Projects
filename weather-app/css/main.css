@@ -23,6 +23,7 @@ h1, h2 {
 .temperature, .degree {
   display: inline-block;
   vertical-align: middle;
+  font-size: 1.7em;
   color: #fff;
   margin-right: 4px;
 }
@@ -88,6 +89,10 @@ h1, h2 {
   .forecast div {
     padding: 25px;
     margin: 0 10px;
+  }
+
+  .temperature, .degree {
+    margin-right: 8px;
   }
 }
 

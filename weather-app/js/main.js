@@ -33,13 +33,23 @@
     IMPERIAL: 'imperial'
   };
   var currentUnit = UNITS.METRICS;
+  var currentTemperature = null;
 
   function toggleUnits() {
     currentUnit = currentUnit === UNITS.METRICS ? UNITS.IMPERIAL : UNITS.METRICS;
+    degreeElement.textContent = getUnit();
+    temperatureElement.textContent = Math.round(currentTemperature[currentUnit]);
   }
 
   function getUnit () {
-    return currentUnit === UNITS.METRICS ? '°C' : '°K';
+    return currentUnit === UNITS.METRICS ? '°C' : '°F';
+  }
+
+  function getTemperatureFormats(celsius) {
+    var temperature = {};
+    temperature[UNITS.METRICS] = celsius;
+    temperature[UNITS.IMPERIAL] = celsius * (9/5) + 32;
+    return temperature;
   }
 
   function showErrorMessage() {
@@ -53,8 +63,9 @@
     var windSpeed = weatherResponse.wind.speed;
     var city = weatherResponse.city;
     var icon = weatherResponse.weather[0].icon;
+    currentTemperature = getTemperatureFormats(temperature);
 
-    temperatureElement.textContent = temperature;
+    temperatureElement.textContent = Math.round(temperature);
     degreeElement.textContent = getUnit();
     locationElement.textContent = city;
     conditionsElement.textContent = conditions;
@@ -123,4 +134,7 @@
   }
 
   getLocation(getWeather);
+  degreeElement.addEventListener('click', function (e) {
+    toggleUnits();
+  });
 }());
