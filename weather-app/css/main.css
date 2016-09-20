@@ -10,10 +10,28 @@ h1, h2 {
   font-family: 'Lobster', cursive;
 }
 
+.weather-info {
+  height: 50px;
+  text-align: center; margin: 1em 0;
+}
+
+.weather-icon {
+  vertical-align: middle;
+}
+
+.temperature {
+  display: inline-block;
+  vertical-align: middle;
+}
+
 .forecast div {
   background: #fff;
   display: inline-block;
   padding: 15px;
   margin: 0 10px;
   box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+}
+
+.hide {
+  display: none;
 }
