@@ -8,7 +8,7 @@
   display: inline-block;
 }
 
-textarea {
+textarea, .fake-textarea {
   width: 100%;
   height: 100%;
   border: 1px solid black;
@@ -17,6 +17,11 @@ textarea {
 
 textarea:not(:focus) {
   background-color: #f0f0f0;
+}
+
+textarea:focus {
+  outline: none;
+  background-color: #fff;
 }
 
 .content {

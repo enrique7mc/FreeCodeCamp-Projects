@@ -1,8 +1,8 @@
 {
-  "name": "es6-boilerplate",
+  "name": "live-code",
   "version": "1.0.0",
-  "repository": "https://github.com/enrique7mc/es6-boilerplate.git",
-  "description": "ES6 boilerplate project",
+  "repository": "https://github.com/enrique7mc/FreeCodeCamp-Projects.git",
+  "description": "A live pastebin for HTML, CSS & JavaScript based on JSbin",
   "main": "app.js",
   "scripts": {
     "start": "browser-sync start --server --files \"*.html, css/*.css, js/*.js\"",
@@ -20,5 +20,8 @@
     "eslint-plugin-jsx-a11y": "^2.2.2",
     "eslint-plugin-react": "^6.2.2",
     "webpack": "^2.1.0-beta.24"
+  },
+  "dependencies": {
+    "jquery": "^3.1.0"
   }
 }

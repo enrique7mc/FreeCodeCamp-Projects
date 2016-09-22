@@ -6,8 +6,8 @@
     "jquery": true
   },
   "rules": {
-    "no-console": 1,
-    "class-methods-use-this": 1,    
+    "no-console": 0,
+    "class-methods-use-this": 1,
     "comma-dangle": 0,
   }
 }
