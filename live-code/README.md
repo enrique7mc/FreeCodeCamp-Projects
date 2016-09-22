@@ -1,6 +1,6 @@
-# ES6 boilerplate
+# Live Code
 
-Basic boilerplate setup for integrating ES6 into a web project
+A live pastebin for HTML, CSS & JavaScript based on [JSbin](http://jsbin.com/)
 
 ## Features
 - Webpack bundling
