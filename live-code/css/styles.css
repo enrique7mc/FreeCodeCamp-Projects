@@ -1,7 +1,3 @@
-div {
-  border: 1px solid black;
-}
-
 .buttons {
   height: 40px;
   text-align: center;
@@ -10,6 +6,17 @@ div {
 .button {
   border-right: 1px solid black;
   display: inline-block;
+}
+
+textarea {
+  width: 100%;
+  height: 100%;
+  border: 1px solid black;
+  font-family: 'Inconsolata', monospace;
+}
+
+textarea:not(:focus) {
+  background-color: #f0f0f0;
 }
 
 .content {
