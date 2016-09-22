@@ -1,0 +1,23 @@
+div {
+  border: 1px solid black;
+}
+
+.buttons {
+  height: 40px;
+  text-align: center;
+}
+
+.button {
+  border-right: 1px solid black;
+  display: inline-block;
+}
+
+.content {
+  display: flex;
+  height: 95vh;
+}
+
+.code {
+  flex-grow: 1;
+  flex-basis: 0;
+}
