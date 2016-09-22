@@ -1,0 +1,24 @@
+{
+  "name": "es6-boilerplate",
+  "version": "1.0.0",
+  "repository": "https://github.com/enrique7mc/es6-boilerplate.git",
+  "description": "ES6 boilerplate project",
+  "main": "app.js",
+  "scripts": {
+    "start": "browser-sync start --server --files \"*.html, css/*.css, js/*.js\"",
+    "build": "webpack --progress --watch"
+  },
+  "author": "Enrique Munguía",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-core": "^6.14.0",
+    "babel-loader": "^6.2.5",
+    "babel-preset-es2015-native-modules": "^6.9.4",
+    "eslint": "^3.5.0",
+    "eslint-config-airbnb": "^11.1.0",
+    "eslint-plugin-import": "^1.15.0",
+    "eslint-plugin-jsx-a11y": "^2.2.2",
+    "eslint-plugin-react": "^6.2.2",
+    "webpack": "^2.1.0-beta.24"
+  }
+}
