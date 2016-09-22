@@ -1,2 +1,3 @@
-live-code/_build/
+live-code/_build/bundle.js
+live-code/_build/bundle.js.map
 live-code/node_modules/
