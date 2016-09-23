@@ -13,6 +13,7 @@ const showCode = ($element, filePath) => {
   $.get(filePath)
   .done((data) => {
     $element.val(`${data}`);
+    // add to preview
     $output.append(data);
   })
   .fail(() => {
