@@ -8,13 +8,15 @@ const $cssTextArea = $('[name=css-text-area]');
 const $jsTextArea = $('[name=javascript-text-area]');
 const $output = $('.output');
 const $textAreas = [$htmlTextArea, $cssTextArea, $jsTextArea, $output];
-const $containters = $textAreas.map($t => $t.parent());
+const $containers = $textAreas.map($t => $t.parent());
 
 const $htmlButton = $('.html-button');
 const $cssButton = $('.css-button');
 const $jsButton = $('.javascript-button');
 const $outputButton = $('.output-button');
 const $buttons = [$htmlButton, $cssButton, $jsButton, $outputButton];
+
+let containersSelected = 0;
 
 const showCode = ($element, filePath) => {
   $.get(filePath)
@@ -35,11 +37,15 @@ showCode($jsTextArea, '../demo-code/demo.js');
 $buttons.forEach((e, index) => {
   e.on('click', function onClick() {
     if ($(this).hasClass('selected')) {
-      $containters[index].append($textAreas[index]);
-    } else {
+      $containers[index].append($textAreas[index]);
+      containersSelected -= 1;
+      $containers[index].toggleClass('code-selected');
+      $(this).toggleClass('selected');
+    } else if (containersSelected < 3) {
       $textAreas[index].detach();
+      containersSelected += 1;
+      $containers[index].toggleClass('code-selected');
+      $(this).toggleClass('selected');
     }
-    $containters[index].toggleClass('code-selected');
-    $(this).toggleClass('selected');
   });
 });
